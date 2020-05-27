@@ -1,0 +1,8 @@
+{
+  "name": "my_video_playground",
+  "version": "1.0.0",
+  "description": "video playground",
+  "main": "index.js",
+  "author": "BABA HIRONOBU",
+  "license": "MIT"
+}
