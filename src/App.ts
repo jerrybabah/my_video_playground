@@ -1,11 +1,11 @@
-import BaseComponent from './components/BaseComponent.js';
+import BaseComponent from './components/BaseComponent';
 
 export default class App extends BaseComponent {
-  constructor($target) {
+  constructor($target: HTMLElement) {
     super($target);
   }
 
-  render() {
+  public render(): void {
     const app = document.createElement('h1');
     app.innerText = 'my video playground';
 
