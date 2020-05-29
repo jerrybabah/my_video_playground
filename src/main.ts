@@ -1,4 +1,5 @@
 import App from './App';
+import './css/style';
 
 const target = document.getElementById('app');
 
