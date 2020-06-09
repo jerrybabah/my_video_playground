@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>my video playground</title>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <h1>my video playground</h1>
+      <main>
+        <!-- video comp 시작 -->
+        <section class="video-section">
+          <div class="video-wrapper">
+            <video src="abc" poster="/image/poster.jpg"></video>
+            <!-- video controls 시작 -->
+            <div class="video-controls">
+              <div class="start">
+                <button>시작</button>
+              </div>
+              <div class="pause">
+                <button>멈춤</button>
+              </div>
+            </div>
+            <!-- video controls 끝 -->
+          </div>
+          <!-- video options 시작 -->
+          <div class="video-options">
+            <div class="video-source">
+              <label for="src">video url: </label>
+              <input type="text" name="src">
+            </div>
+            <div class="video-autoplay">
+              <label for="autopaly">자동재생</label>
+              <input type="checkbox" name="autoplay">
+            </div>
+            <div class="video-replay">
+              <label for="replay">무한반복</label>
+              <input type="checkbox" name="replay">
+            </div>
+          </div>
+          <!-- video options 끝 -->
+        </section>
+        <!-- video comp 끝 -->
+        <!-- event stack comp 시작 -->
+        <section class="event-stack-section">
+          <h2>event stack</h2>
+          <div class="event-stack">
+
+          </div>
+        </section>
+        <!-- event stack comp 끝 -->
+      </main>
+    </div>
+  </div>
+</body>
+</html>
