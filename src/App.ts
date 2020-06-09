@@ -1,4 +1,6 @@
 import BaseComponent from './components/BaseComponent';
+import Video from './components/Video';
+import EventStack from './components/EventStack';
 
 export default class App extends BaseComponent {
   constructor($target: HTMLElement) {
@@ -6,9 +8,27 @@ export default class App extends BaseComponent {
   }
 
   public render(): void {
-    const app = document.createElement('h1');
-    app.innerText = 'my video playground';
+    const appContainer = document.createElement('div');
+    appContainer.classList.add('container');
 
-    this.$target.appendChild(app);
+      const title = document.createElement('h1');
+      title.innerText = 'my video playground';
+
+      const mainContents = document.createElement('main');
+
+      new Video(mainContents);
+      new EventStack(mainContents);
+    
+    appContainer.append(title, mainContents);
+
+    this.$target.appendChild(appContainer);
   }
 }
+
+/**
+ * <div.container>
+ *  <h1>
+ *  <main>
+ *    <div.video-section>
+ *    <div.event-stack-section>
+ */
