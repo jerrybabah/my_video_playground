@@ -7,14 +7,14 @@ export default class EventStack extends BaseComponent {
 
   public render(): void {
     const eventStackSection = document.createElement('section');
-    eventStackSection.classList.add('event-stack-section');
+    eventStackSection.classList.add('event-stack-section', 'column');
 
       const title = document.createElement('h2');
       title.innerText = 'event stack';
 
       const eventStack = document.createElement('div');
       eventStack.classList.add('event-stack');
-
+      
     eventStackSection.append(title, eventStack);
 
     this.$target.appendChild(eventStackSection);

@@ -9,12 +9,13 @@ export default class Video extends BaseComponent {
 
   public render(): void {
     const videoSection = document.createElement('section');
-    videoSection.classList.add('video-section');
+    videoSection.classList.add('video-section', 'column');
 
       const videoWrapper = document.createElement('div');
-      videoWrapper.classList.add('video-wrapper');
+      videoWrapper.classList.add('video-wrapper', 'column');
 
         const video = document.createElement('video');
+        video.src = 'https://hanyang2.commonscdn.com/contents/hanyang101/5ed9e7da6d373/contents/media_files/mobile/ssmovie.mp4';
 
       videoWrapper.append(video);
       new VideoControls(videoWrapper);

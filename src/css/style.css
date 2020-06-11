@@ -2,6 +2,173 @@
   box-sizing: border-box;
 }
 
+body {
+  margin: 0px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+/* flexbox와 함께 사용 */
+.wrap {
+  flex-wrap: wrap;
+}
+
+/* flexbox와 함께 사용 */
+.main-axis-evenly {
+  justify-content: space-evenly;
+}
+
+/* flexbox와 함께 사용 */
+.main-axis-around {
+  justify-content: space-around;
+}
+
+/* flexbox와 함께 사용 */
+.main-axis-between {
+  justify-content: space-between;
+}
+
+/* flexbox와 함께 사용 */
+.cross-axis-center {
+  align-items: center;
+}
+
+.evenly-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.around-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.between-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.center-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  margin: 8px;
+}
+
 h1 {
   color: red;
 }
+
+.video-playground {
+  display: flex;
+  flex-direction: column;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 700px;
+  flex-grow: 0;
+}
+
+.video-wrapper video {
+  width: 100%;
+}
+
+.video-wrapper .video-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.event-stack-section {
+  flex-grow: 1;
+  padding: 0;
+}
+
+.event-stack-section h2 {
+  margin-top: 0;
+  color: blue;
+}
+
+.event-stack {
+  flex-grow: 1;
+  width: 100%;
+  min-height: 200px;
+  border: 1px solid black;
+}
+
+@media (max-width: 575px) {
+  .video-playground {
+    width: 100%;
+  }
+
+  .video-wrapper {
+    width: 100%;
+  }
+}
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .video-playground {
+    width: 500px;
+  }
+
+  .video-wrapper {
+    width: 100%;
+  }
+}
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .video-playground {
+    width: 700px;
+  }
+}
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .video-playground {
+    width: 900px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .event-stack-section {
+    padding: 0 5px;
+    align-items: center;
+  }
+}
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .video-playground {
+    width: 1200px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .video-wrapper {
+    width: 1000px;
+  }
+
+  .event-stack-section {
+    padding: 0 5px;
+    align-items: center;
+  }
+}
+
+/* @media (prefers-color-scheme: dark) {
+  body {
+    background-color: #2d2d2d;
+  }
+} */

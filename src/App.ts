@@ -9,12 +9,13 @@ export default class App extends BaseComponent {
 
   public render(): void {
     const appContainer = document.createElement('div');
-    appContainer.classList.add('container');
+    appContainer.classList.add('container', 'center-column');
 
       const title = document.createElement('h1');
       title.innerText = 'my video playground';
 
       const mainContents = document.createElement('main');
+      mainContents.classList.add('video-playground');
 
       new Video(mainContents);
       new EventStack(mainContents);
