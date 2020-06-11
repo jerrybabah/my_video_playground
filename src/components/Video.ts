@@ -15,13 +15,18 @@ export default class Video extends BaseComponent {
       videoWrapper.classList.add('video-wrapper', 'column');
 
         const video = document.createElement('video');
-        video.src = 'https://hanyang2.commonscdn.com/contents/hanyang101/5ed9e7da6d373/contents/media_files/mobile/ssmovie.mp4';
+        video.poster = '/image/poster.jpg';
+        video.src = '';
 
       videoWrapper.append(video);
-      new VideoControls(videoWrapper);
+      new VideoControls(videoWrapper, () => {
+        video.play();
+      });
 
     videoSection.append(videoWrapper);
-    new VideoOptions(videoSection);
+    new VideoOptions(videoSection, (url) => {
+      video.src = url;
+    });
 
     this.$target.appendChild(videoSection);
   }

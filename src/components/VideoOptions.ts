@@ -1,8 +1,12 @@
 import BaseComponent from './BaseComponent';
 
 export default class VideoOptions extends BaseComponent {
-  constructor($target: HTMLElement) {
+  private urlInputHandler: (url: string) => void;
+
+  constructor($target: HTMLElement, urlInputHandler: (url: string) => void) {
     super($target);
+    this.urlInputHandler = urlInputHandler;
+
   }
 
   public render(): void {
@@ -22,6 +26,17 @@ export default class VideoOptions extends BaseComponent {
         const videoSourceInput = document.createElement('input');
         videoSourceInput.type = 'text';
         videoSourceInput.name = 'source';
+        videoSourceInput.onkeyup = (event: KeyboardEvent) => {
+          if (event.code === 'Enter') {
+            const urlInput = event.target as HTMLInputElement | null;
+
+            if (urlInput === null) {
+              return;
+            }
+
+            this.urlInputHandler(urlInput.value);
+          }
+        };
 
       videoSource.append(videoSourceLabel, videoSourceInput);
 
