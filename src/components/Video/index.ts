@@ -1,4 +1,4 @@
-import BaseComponent from './BaseComponent';
+import BaseComponent from '../BaseComponent';
 import VideoOptions from './VideoOptions';
 import VideoControls from './VideoControls';
 

@@ -14,16 +14,39 @@
         <section class="video-section">
           <div class="video-wrapper">
             <video src="abc" poster="/image/poster.jpg"></video>
-            <!-- video controls 시작 -->
-            <div class="video-controls">
-              <div class="start">
-                <button>시작</button>
+            <!-- video control wrapper 시작 -->
+            <div class="video-control-wrapper">
+              <div class="play-slider">
+                <!-- ui 만들어야 함 -->
               </div>
-              <div class="pause">
-                <button>멈춤</button>
+              <!-- video controls 시작 -->
+              <div class="video-controls">
+                <div class="left-side">
+                  <div class="start">
+                    <button>시작</button>
+                  </div>
+                  <div class="volume">
+                    <div class="pause">
+                      <button>정지</button>
+                    </div>
+                    <div class="volume-slider">
+                      <!-- 이거 ui를 어떻게 만들지? -->
+                    </div>
+                  </div>
+                  <div class="time">
+                    <span class="play-time">0:07</span>/<span class="total-time">10:06</span>
+                  </div>
+                </div>
+                <div class="right-side">
+                  <div class="playback-rate">
+                    <!-- 누르면 위로 펼쳐지게 하기 -->
+                  </div>
+                  <div class="full-screen"></div>
+                </div>
               </div>
+              <!-- video controls 끝 -->
             </div>
-            <!-- video controls 끝 -->
+            
           </div>
           <!-- video options 시작 -->
           <div class="video-options">

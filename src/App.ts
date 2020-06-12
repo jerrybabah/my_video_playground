@@ -8,19 +8,24 @@ export default class App extends BaseComponent {
   }
 
   public render(): void {
+    // <div.container>
     const appContainer = document.createElement('div');
     appContainer.classList.add('container', 'center-column');
 
+      // <h1>
       const title = document.createElement('h1');
       title.innerText = 'my video playground';
 
+      // <main>
       const mainContents = document.createElement('main');
       mainContents.classList.add('video-playground');
 
-      new Video(mainContents);
-      new EventStack(mainContents);
+        // <div.video-section>
+        new Video(mainContents);
+        // <div.event-stack-section>
+        new EventStack(mainContents);
     
-    appContainer.append(title, mainContents);
+      appContainer.append(title, mainContents);
 
     this.$target.appendChild(appContainer);
   }
