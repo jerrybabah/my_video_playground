@@ -3,8 +3,15 @@ import Video from './components/Video';
 import EventStack from './components/EventStack';
 
 export default class App extends BaseComponent {
+  private video?: Video;
+  private eventStack?: EventStack;
+
   constructor($target: HTMLElement) {
     super($target);
+  }
+
+  public setState(): void {
+    return;
   }
 
   public render(): void {
@@ -21,9 +28,9 @@ export default class App extends BaseComponent {
       mainContents.classList.add('video-playground');
 
         // <div.video-section>
-        new Video(mainContents);
+        this.video = new Video(mainContents);
         // <div.event-stack-section>
-        new EventStack(mainContents);
+        this.eventStack = new EventStack(mainContents);
     
       appContainer.append(title, mainContents);
 

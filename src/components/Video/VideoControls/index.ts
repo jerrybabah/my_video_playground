@@ -1,16 +1,26 @@
-import BaseComponent from '../../BaseComponent';
+// import BaseComponent from '../../BaseComponent';
 import PlaySlider from './PlaySlider';
 import VolumeSlider from './VolumeSlider';
-import { VideoControl } from '../../../interfaces/eventHandlers';
 
-export default class VideoControls extends BaseComponent {
-  public startBtnHandler: VideoControl;
-  public muteBtnHandler: VideoControl;
+export default class VideoControls{
+  private $target: HTMLElement;
 
-  constructor($target: HTMLElement, startBtnHandler: VideoControl, muteBtnHandler: VideoControl) {
-    super($target);
-    this.startBtnHandler = startBtnHandler;
-    this.muteBtnHandler = muteBtnHandler;
+  private state: {
+    play: boolean;
+    mute: boolean;
+    volume: number;
+  };
+
+  constructor($target: HTMLElement, props: {play: boolean, mute: boolean, volume: number}) {
+    this.state = {
+      play: props.play,
+      mute: props.mute,
+      volume: props.volume,
+    };
+
+    this.$target = $target;
+
+    this.render();
   }
 
   public render(): void {
@@ -30,54 +40,20 @@ export default class VideoControls extends BaseComponent {
         leftSide.classList.add('left-side');
 
           // <div.start>
-          const start = document.createElement('button');
+          const start = document.createElement('input');
+          start.type = 'button';
+          start.value = this.state.play? '정지': '시작';
           start.classList.add('start');
-          start.innerText = '시작';
-          
-          start.onclick = (event: MouseEvent) => {
-            const startBtn = event.target as HTMLButtonElement | null;
-
-            if (startBtn === null) {
-              return;
-            }
-
-            this.startBtnHandler(startBtn.innerText);
-
-            if (startBtn.innerText === '시작') {
-              startBtn.innerText = '정지';
-            } else if (startBtn.innerText === '정지') {
-              startBtn.innerText = '시작';
-            } else {
-              return;
-            }
-          };
 
           // <div.volume>
           const volume = document.createElement('div');
           volume.classList.add('volume');
 
             // <div.mute>
-            const mute = document.createElement('button');
+            const mute = document.createElement('input');
+            mute.type = 'button';
+            mute.value = this.state.mute? 'unmute': 'mute';
             mute.classList.add('mute');
-            mute.innerText = '음소거';
-
-            mute.onclick = (event: MouseEvent) => {
-              const muteBtn = event.currentTarget as HTMLButtonElement | null;
-
-              if (muteBtn === null) {
-                return;
-              }
-
-              this.muteBtnHandler(muteBtn.innerHTML);
-
-              if (muteBtn.innerHTML === '음소거') {
-                muteBtn.innerHTML = '<del>음소거</del>';
-              } else if (muteBtn.innerHTML === '<del>음소거</del>') {
-                muteBtn.innerHTML = '음소거';
-              } else {
-                return;
-              }
-            };
 
             volume.append(mute);
 

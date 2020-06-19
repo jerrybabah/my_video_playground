@@ -6,5 +6,7 @@ export default abstract class BaseComponent {
     this.render();
   }
 
+  // public abstract setState(state: {[key: string]: any}): void;
+
   public abstract render(): void;
 }

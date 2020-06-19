@@ -1,12 +1,24 @@
-import BaseComponent from '../BaseComponent';
+// import BaseComponent from '../BaseComponent';
 
-export default class VideoOptions extends BaseComponent {
-  private urlInputHandler: (url: string) => void;
+export default class VideoOptions{
+  private $target: HTMLElement;
 
-  constructor($target: HTMLElement, urlInputHandler: (url: string) => void) {
-    super($target);
-    this.urlInputHandler = urlInputHandler;
+  private state: {
+    videoUrl: string;
+    autoplay: boolean;
+    loop: boolean;
+  }
 
+  constructor($target: HTMLElement, props: {videoUrl: string, autoplay: boolean, loop: boolean}) {
+    this.state = {
+      videoUrl: props.videoUrl,
+      autoplay: props.autoplay,
+      loop: props.loop,
+    };
+
+    this.$target = $target;
+
+    this.render();
   }
 
   public render(): void {
@@ -26,18 +38,8 @@ export default class VideoOptions extends BaseComponent {
         const videoSourceInput = document.createElement('input');
         videoSourceInput.type = 'text';
         videoSourceInput.name = 'source';
-        videoSourceInput.onkeyup = (event: KeyboardEvent) => {
-          if (event.code === 'Enter') {
-            const urlInput = event.target as HTMLInputElement | null;
-
-            if (urlInput === null) {
-              return;
-            }
-
-            this.urlInputHandler(urlInput.value);
-          }
-        };
-
+        videoSourceInput.value = this.state.videoUrl;
+        
       videoSource.append(videoSourceLabel, videoSourceInput);
 
       /**
@@ -53,6 +55,7 @@ export default class VideoOptions extends BaseComponent {
         const videoAutoplayCheckbox = document.createElement('input');
         videoAutoplayCheckbox.type = 'checkbox';
         videoAutoplayCheckbox.name = 'autoplay';
+        videoAutoplayCheckbox.checked = this.state.autoplay;
 
       videoAutoplay.append(videoAutoplayLabel, videoAutoplayCheckbox);
 
@@ -69,6 +72,7 @@ export default class VideoOptions extends BaseComponent {
         const videoReplayCheckbox = document.createElement('input');
         videoReplayCheckbox.type = 'checkbox';
         videoReplayCheckbox.name = 'replay';
+        videoReplayCheckbox.checked = this.state.loop;
 
       videoReplay.append(videoReplayLabel, videoReplayCheckbox);
 

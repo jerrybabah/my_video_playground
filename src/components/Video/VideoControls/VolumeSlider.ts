@@ -1,8 +1,10 @@
-import BaseComponent from '../../BaseComponent';
+// import BaseComponent from '../../BaseComponent';
 
-export default class VolumeSlider extends BaseComponent {
+export default class VolumeSlider{
+  private $target: HTMLElement;
+
   constructor($target: HTMLElement) {
-    super($target);
+    this.$target = $target;
   }
 
   public render(): void {
