@@ -28,6 +28,19 @@ export default class VideoControls{
     playbackRate: number;
   };
 
+  public setState(state: { play?: boolean, mute?: boolean, volumn?: number, 
+                           currentTime?: string, totalTime?: string, playbackRate?: number }): void {
+    if (state.play !== undefined) {
+      this.state.play = state.play;
+      this.components.start.setState({ play: state.play });
+    }
+
+    if (state.mute !== undefined) {
+      this.state.mute = state.mute;
+      this.components.volume.setState( { mute: state.mute });
+    }
+  }
+
   constructor(props: { play: boolean; mute: boolean; volume: number; currentTime: string; totalTime: string, playbackRate: number }) {
     // init state
     this.state = {

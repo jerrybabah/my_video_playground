@@ -13,6 +13,13 @@ export default class Volume {
     mute: boolean;
   }
 
+  public setState(state: { volume?: number, mute?: boolean }): void {
+    if (state.mute !== undefined) {
+      this.state.mute = state.mute;
+      this.components.mute.setState({ mute: state.mute });
+    }
+  }
+
   constructor(props: { volume: number; mute: boolean }) {
     // init state
     this.state = {

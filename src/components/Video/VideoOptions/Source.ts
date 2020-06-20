@@ -35,6 +35,21 @@ export default class Source {
       this.components.videoSourceInput.type = 'text';
       this.components.videoSourceInput.name = 'source';
       this.components.videoSourceInput.value = this.state.videoUrl;
+      this.components.videoSourceInput.placeholder = '입력 후 엔터';
+
+      this.components.videoSourceInput.oninput = (event: Event) => {
+        event.stopPropagation();
+      };
+
+      this.components.videoSourceInput.onchange = (event: Event) => {
+        event.stopPropagation();
+      };
+
+      this.components.videoSourceInput.onkeyup = (event: KeyboardEvent) => {
+        if (event.code !== 'Enter') {
+          event.stopPropagation();
+        }
+      };
 
       this.components.videoSource.append(this.components.videoSourceLabel, this.components.videoSourceInput);
 

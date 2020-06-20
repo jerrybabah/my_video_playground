@@ -16,6 +16,9 @@ export default class FullScreen {
     this.components.fullScreen.classList.add('full-screen');
 
       // <img>
+      this.components.fullScreenImg.classList.add('video-control-btn');
+      this.components.fullScreenImg.name = 'full';
+
       this.components.fullScreenImg.src = '/image/video/full/full_24.png';
       this.components.fullScreenImg.alt = '전체화면';
 

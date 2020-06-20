@@ -3,7 +3,7 @@ import VideoControls from './VideoControls';
 
 export default class Video{
   private components: {
-    videoSection: HTMLDivElement,
+    videoSection: HTMLElement,
     videoWrapper: HTMLDivElement,
     videoOptions: VideoOptions,
     video: HTMLVideoElement,
@@ -39,7 +39,7 @@ export default class Video{
 
     // init view component
     this.components = {
-      videoSection: document.createElement('div'),
+      videoSection: document.createElement('section'),
       videoWrapper: document.createElement('div'),
       videoOptions: new VideoOptions(this.state),
       video: document.createElement('video'),
@@ -47,22 +47,43 @@ export default class Video{
     };
   }
 
-  public setState(setted: {videoUrl?: string, play?: boolean, mute?: boolean, volumn?: number}): void {
-    if (setted.videoUrl !== undefined) {
-      this.state.videoUrl = setted.videoUrl;
+  public setState(state: { play?: boolean, mute?: boolean, volumn?: number,
+                           currentTime?: string, totalTime?: string, playbackRate?: number,
+                           videoUrl?: string, autoplay?: boolean, loop?: boolean }): void {
+
+    if (state.videoUrl !== undefined && state.videoUrl !== this.state.videoUrl) {
+      this.state.videoUrl = state.videoUrl;
+      this.components.video.src = this.state.videoUrl;
     }
 
-    if (setted.play !== undefined) {
-      this.state.play = setted.play;
+    if (state.autoplay !== undefined) {
+      this.state.autoplay = state.autoplay;
+      this.components.video.autoplay = this.state.autoplay;
     }
 
-    if (setted.mute !== undefined) {
-      this.state.mute = setted.mute;
+    if (state.loop !== undefined) {
+      this.state.loop = state.loop;
+      this.components.video.loop = this.state.loop;
     }
 
-    if (setted.volumn !== undefined) {
-      this.state.volume = setted.volumn;
+    if (state.play !== undefined) {
+      this.state.play = state.play;
+
+      if (this.state.play) {
+        this.components.video.play(); // 비동기임 
+      } else {
+        this.components.video.pause();
+      }
     }
+
+    if (state.mute !== undefined) {
+      this.state.mute = state.mute;
+      this.components.video.muted = this.state.mute;
+    }
+
+    // TODO: ...더 구현
+
+    this.components.videoControls.setState(state);
   }
 
   public render($target: HTMLElement): void {
@@ -70,14 +91,35 @@ export default class Video{
     this.components.videoSection.classList.add('video-section', 'column');
 
     this.components.videoSection.onclick = (event: MouseEvent) => {
-      const target = event.target as HTMLInputElement | null;
+      const target = event.target as HTMLImageElement | null;
 
-      if (!target) {
+      if (!target || !target.classList.contains('video-control-btn')) {
         return;
       }
 
-      if (target.classList.contains('video-control-btn')) {
-        console.log('click', event.target, event.currentTarget);
+      if (target.name === 'play') {
+
+        if (target.alt === '시작') {
+          this.setState({ play: true });
+
+        } else {
+          this.setState({ play: false });
+        }
+
+      } else if (target.name === 'mute') {
+
+        if (target.alt === '음소거') {
+          this.setState({ mute: false });
+
+        } else {
+          this.setState({ mute: true });
+        }
+
+      } else if (target.name === 'full') {
+        console.log('click full screen');
+        
+      } else {
+        return;
       }
     };
 
@@ -89,6 +131,20 @@ export default class Video{
 
     this.components.videoSection.oninput = (event: Event) => {
       console.log('input', event.target, event.currentTarget);
+    };
+
+    this.components.videoSection.onkeyup = (event: KeyboardEvent) => {
+      if (event.code !== 'Enter') {
+        return;
+      }
+
+      const target = event.target as HTMLInputElement | null;
+
+      if (!target || !target.parentElement?.classList.contains('video-source')) {
+        return;
+      }
+
+      this.setState({ videoUrl: target.value });
     };
 
       // <div.video-wrapper>

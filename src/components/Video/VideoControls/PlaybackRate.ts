@@ -7,14 +7,14 @@ export default class PlaybackRate {
   };
 
   private state: {
-    currentPlaybackRate: number;
+    playbackRate: number;
     accessiblePlaybacks: number[];
   }
 
   constructor(props: { playbackRate: number }) {
     // init state
     this.state = {
-      currentPlaybackRate: props.playbackRate,
+      playbackRate: props.playbackRate,
       accessiblePlaybacks: [0.5, 1.0, 2.0],
     };
 
@@ -39,7 +39,7 @@ export default class PlaybackRate {
 
       // <div.current-playback-rate>
       this.components.currentPlaybackRate.classList.add('current-playback-rate');
-      this.components.currentPlaybackRate.innerText = this.state.currentPlaybackRate.toFixed(1);
+      this.components.currentPlaybackRate.innerText = this.state.playbackRate.toFixed(1);
 
       // <ul.playback-rate-list>
       this.components.playbackRateList.classList.add('playback-rate-list', 'hide');
