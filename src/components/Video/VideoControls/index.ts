@@ -23,14 +23,20 @@ export default class VideoControls{
     play: boolean;
     mute: boolean;
     volume: number;
+    currentTime: string;
+    totalTime: string;
+    playbackRate: number;
   };
 
-  constructor(props: {play: boolean, mute: boolean, volume: number}) {
+  constructor(props: { play: boolean; mute: boolean; volume: number; currentTime: string; totalTime: string, playbackRate: number }) {
     // init state
     this.state = {
       play: props.play,
       mute: props.mute,
       volume: props.volume,
+      currentTime: props.currentTime,
+      totalTime: props.totalTime,
+      playbackRate: props.playbackRate,
     };
 
     // init view component
@@ -39,11 +45,11 @@ export default class VideoControls{
       playSlider: new PlaySlider(),
       videoControls: document.createElement('div'),
       leftSide: document.createElement('div'),
-      start: new Start(),
-      volume: new Volume(),
-      time: new Time(),
+      start: new Start(this.state),
+      volume: new Volume(this.state),
+      time: new Time(this.state),
       rightSide: document.createElement('div'),
-      playbackRate: new PlaybackRate(),
+      playbackRate: new PlaybackRate(this.state),
       fullScreen: new FullScreen(),
     };
   }
@@ -52,7 +58,7 @@ export default class VideoControls{
     // <div.video-control-wrapper>
     this.components.videoControlWrapper.classList.add('video-control-wrapper');
 
-      // <div.play-slider>
+      // <play-slider>
       this.components.playSlider.render(this.components.videoControlWrapper);
 
       // <div.video-controls>
@@ -61,19 +67,22 @@ export default class VideoControls{
         // <div.left-side>
         this.components.leftSide.classList.add('left-side');
 
-          // <div.start>
+          // <start>
           this.components.start.render(this.components.leftSide);
 
-          // <div.volume>
+          // <volume>
           this.components.volume.render(this.components.leftSide);
+
+          // <time>
+          this.components.time.render(this.components.leftSide);
         
         // <div.right-side>
         this.components.rightSide.classList.add('right-side');
 
-          // <div.playback-rate>
+          // <playback-rate>
           this.components.playbackRate.render(this.components.rightSide);
 
-          // <div.full-screen>
+          // <full-screen>
           this.components.fullScreen.render(this.components.rightSide);
         
         this.components.videoControls.append(this.components.leftSide, this.components.rightSide);
@@ -86,15 +95,13 @@ export default class VideoControls{
 
 /**
  * <div.video-control-wrapper>
- *  <div.play-slider>
+ *  <play-slider>
  *  <div.video-controls>
  *    <div.left-side>
- *      <div.start>
- *      <div.volume>
- *        <div.mute>
- *        <div.volume-slider>
- *      <div.time>
+ *      <start>
+ *      <volume>
+ *      <time>
  *    <div.right-side>
- *      <div.playback-rate>
- *      <div.full-screen>
+ *      <playback-rate>
+ *      <full-screen>
  */

@@ -29,14 +29,6 @@ export default class EventStack{
       this.components.eventStackTitle.innerText = 'event stack';
 
       this.components.eventStack.classList.add('event-stack');
-
-      // for (const event of this.events) {
-      //   const eventEl = document.createElement('a');
-      //   eventEl.innerText = event.name;
-      //   eventEl.href = event.link;
-
-
-      // }
       
     this.components.eventStackSection.append(this.components.eventStackTitle, this.components.eventStack);
 

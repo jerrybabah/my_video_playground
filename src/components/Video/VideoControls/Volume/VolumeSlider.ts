@@ -1,5 +1,5 @@
 export default class VolumeSlider {
-  // private elements: {
+  // private components: {
 
   // };
 
@@ -11,7 +11,7 @@ export default class VolumeSlider {
     return;
   }
 
-  public render($target: HTMLElement) {
+  public render($target: HTMLElement): void {
     return;
   }
 }

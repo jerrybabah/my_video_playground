@@ -14,6 +14,9 @@ export default class Video{
     play: boolean;
     mute: boolean;
     volume: number;
+    currentTime: string;
+    totalTime: string;
+    playbackRate: number;
     videoUrl: string;
     autoplay: boolean;
     loop: boolean;
@@ -25,6 +28,9 @@ export default class Video{
       play: false,
       mute: false,
       volume: 0,
+      currentTime: '00:00',
+      totalTime: '00:00',
+      playbackRate: 1.0,
       videoUrl: '',
       // TODO: localStorage에 저장된 것 확인 후 정하기
       autoplay: false,
@@ -60,6 +66,7 @@ export default class Video{
   }
 
   public render($target: HTMLElement): void {
+    // <div.video-section>
     this.components.videoSection.classList.add('video-section', 'column');
 
     this.components.videoSection.onclick = (event: MouseEvent) => {
@@ -84,16 +91,21 @@ export default class Video{
       console.log('input', event.target, event.currentTarget);
     };
 
+      // <div.video-wrapper>
       this.components.videoWrapper.classList.add('video-wrapper', 'column');
 
+        // <video>
         this.components.video.poster = '/image/poster.jpg';
         this.components.video.src = this.state.videoUrl;
 
-      this.components.videoWrapper.append(this.components.video);
-      this.components.videoControls.render(this.components.videoWrapper);
+        this.components.videoWrapper.append(this.components.video);
 
-    this.components.videoSection.append(this.components.videoWrapper);
-    this.components.videoOptions.render(this.components.videoSection);
+        // <video-controls>
+        this.components.videoControls.render(this.components.videoWrapper);
+
+      this.components.videoSection.append(this.components.videoWrapper);
+      // <video-options>
+      this.components.videoOptions.render(this.components.videoSection);
 
     $target.appendChild(this.components.videoSection);
   }
@@ -103,6 +115,6 @@ export default class Video{
  * <section.video-section>
  *  <div.video-wrapper>
  *    <video>
- *    <div.video-controls>
- *  <div.video-options>
+ *    <video-controls>
+ *  <video-options>
  */
