@@ -27,10 +27,10 @@ export default class Mute {
     
       // <img>
       if (this.state.mute) {
-        this.components.muteImg.src = '/image/video/mute/mute_32.png';
+        this.components.muteImg.src = '/image/video/mute/mute_24.png';
         this.components.muteImg.alt = '음소거';
       } else {
-        this.components.muteImg.src = '/image/video/unmute/unmute_32.png';
+        this.components.muteImg.src = '/image/video/unmute/unmute_24.png';
         this.components.muteImg.alt = '음소거 해제';
       }
 

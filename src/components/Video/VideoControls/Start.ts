@@ -27,10 +27,10 @@ export default class Start {
 
       // <img>
       if (this.state.play) {
-        this.components.startImg.src = '/image/video/stop/stop_32.png';
+        this.components.startImg.src = '/image/video/stop/stop_24.png';
         this.components.startImg.alt = '정지';
       } else {
-        this.components.startImg.src = '/image/video/start/start_32.png';
+        this.components.startImg.src = '/image/video/start/start_24.png';
         this.components.startImg.alt = '시작';
       }
 

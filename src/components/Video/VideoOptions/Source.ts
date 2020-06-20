@@ -29,7 +29,7 @@ export default class Source {
 
       // <label>
       this.components.videoSourceLabel.htmlFor = 'source';
-      this.components.videoSourceLabel.innerText = 'video url';
+      this.components.videoSourceLabel.innerText = 'video url: ';
 
       // <input>
       this.components.videoSourceInput.type = 'text';

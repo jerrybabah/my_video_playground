@@ -42,7 +42,7 @@ export default class PlaybackRate {
       this.components.currentPlaybackRate.innerText = this.state.currentPlaybackRate.toFixed(1);
 
       // <ul.playback-rate-list>
-      this.components.playbackRateList.classList.add('playback-rate-list');
+      this.components.playbackRateList.classList.add('playback-rate-list', 'hide');
 
         // <li.playback-rate-value>
         this.components.playbackRateList.append(...this.components.playbackRateValues);
