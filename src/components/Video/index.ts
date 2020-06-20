@@ -1,9 +1,15 @@
-// import BaseComponent from '../BaseComponent';
 import VideoOptions from './VideoOptions';
 import VideoControls from './VideoControls';
 
 export default class Video{
-  private $target: HTMLElement;
+  private components: {
+    videoSection: HTMLDivElement,
+    videoWrapper: HTMLDivElement,
+    videoOptions: VideoOptions,
+    video: HTMLVideoElement,
+    videoControls: VideoControls,
+  }
+
   private state: {
     play: boolean;
     mute: boolean;
@@ -13,7 +19,7 @@ export default class Video{
     loop: boolean;
   }
 
-  constructor($target: HTMLElement) {
+  constructor() {
     // init state
     this.state = {
       play: false,
@@ -25,9 +31,14 @@ export default class Video{
       loop: false,
     };
 
-    this.$target = $target;
-
-    this.render();
+    // init view component
+    this.components = {
+      videoSection: document.createElement('div'),
+      videoWrapper: document.createElement('div'),
+      videoOptions: new VideoOptions(this.state),
+      video: document.createElement('video'),
+      videoControls: new VideoControls(this.state),
+    };
   }
 
   public setState(setted: {videoUrl?: string, play?: boolean, mute?: boolean, volumn?: number}): void {
@@ -48,11 +59,10 @@ export default class Video{
     }
   }
 
-  public render(): void {
-    const videoSection = document.createElement('section');
-    videoSection.classList.add('video-section', 'column');
+  public render($target: HTMLElement): void {
+    this.components.videoSection.classList.add('video-section', 'column');
 
-    videoSection.onclick = (event: MouseEvent) => {
+    this.components.videoSection.onclick = (event: MouseEvent) => {
       const target = event.target as HTMLInputElement | null;
 
       if (!target) {
@@ -64,30 +74,28 @@ export default class Video{
       }
     };
 
-    videoSection.onchange = (event: Event) => {
+    this.components.videoSection.onchange = (event: Event) => {
       // const target = event.target as HTMLInput
 
       console.log('change', event.target, event.currentTarget);
     };
 
-    videoSection.oninput = (event: Event) => {
+    this.components.videoSection.oninput = (event: Event) => {
       console.log('input', event.target, event.currentTarget);
     };
 
-      const videoWrapper = document.createElement('div');
-      videoWrapper.classList.add('video-wrapper', 'column');
+      this.components.videoWrapper.classList.add('video-wrapper', 'column');
 
-        const video = document.createElement('video');
-        video.poster = '/image/poster.jpg';
-        video.src = this.state.videoUrl;
+        this.components.video.poster = '/image/poster.jpg';
+        this.components.video.src = this.state.videoUrl;
 
-      videoWrapper.append(video);
-      new VideoControls(videoWrapper, this.state);
+      this.components.videoWrapper.append(this.components.video);
+      this.components.videoControls.render(this.components.videoWrapper);
 
-    videoSection.append(videoWrapper);
-    new VideoOptions(videoSection, this.state);
+    this.components.videoSection.append(this.components.videoWrapper);
+    this.components.videoOptions.render(this.components.videoSection);
 
-    this.$target.appendChild(videoSection);
+    $target.appendChild(this.components.videoSection);
   }
 }
 

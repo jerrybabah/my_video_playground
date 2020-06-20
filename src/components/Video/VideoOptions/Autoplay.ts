@@ -1,4 +1,4 @@
-export default class PlaySlider {
+export default class Autoplay {
   // private elements: {
 
   // };

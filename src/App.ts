@@ -1,40 +1,58 @@
-import BaseComponent from './components/BaseComponent';
 import Video from './components/Video';
 import EventStack from './components/EventStack';
+import { VideoEvent } from './interfaces/Event';
 
-export default class App extends BaseComponent {
-  private video?: Video;
-  private eventStack?: EventStack;
+export default class App{
+  private components: {
+    container: HTMLDivElement,
+    head: HTMLHeadingElement,
+    main: HTMLElement,
+    video: Video,
+    eventStack: EventStack,
+  }
 
-  constructor($target: HTMLElement) {
-    super($target);
+  private state: {
+    events: VideoEvent[];
+  }
+
+  constructor() {
+    // init state
+    this.state = {
+      events: [],
+    };
+
+    // init view component
+    this.components = {
+      container: document.createElement('div'),
+      head: document.createElement('h1'),
+      main: document.createElement('main'),
+      video: new Video(),
+      eventStack: new EventStack(this.state),
+    };
   }
 
   public setState(): void {
     return;
   }
 
-  public render(): void {
+  public render($target: HTMLElement): void {
     // <div.container>
-    const appContainer = document.createElement('div');
-    appContainer.classList.add('container', 'center-column');
+    this.components.container.classList.add('container', 'center-column');
 
       // <h1>
-      const title = document.createElement('h1');
-      title.innerText = 'my video playground';
+      this.components.head.innerText = 'my video playground';
 
       // <main>
-      const mainContents = document.createElement('main');
-      mainContents.classList.add('video-playground');
+      this.components.main.classList.add('video-playground');
 
         // <div.video-section>
-        this.video = new Video(mainContents);
+        this.components.video.render(this.components.main);
         // <div.event-stack-section>
-        this.eventStack = new EventStack(mainContents);
+        this.components.eventStack.render(this.components.main);
     
-      appContainer.append(title, mainContents);
+      this.components.container.append(this.components.head, this.components.main);
 
-    this.$target.appendChild(appContainer);
+    $target.appendChild(this.components.container);
   }
 }
 

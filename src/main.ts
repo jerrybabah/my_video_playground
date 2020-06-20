@@ -1,10 +1,11 @@
 import App from './App';
 import './css/style';
 
-const target = document.getElementById('app');
+const app = new App();
+const $target = document.getElementById('app');
 
-if (target) {
-  new App(target);
+if ($target) {
+  app.render($target);
 } else {
-  throw new Error('index.html에 app id를 갖는 element를 가지고 있지 않습니다.');
+  throw new Error('초기 진입 html(index.html)에서 id가 "app"인 element를 찾지 못했습니다.');
 }

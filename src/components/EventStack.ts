@@ -1,41 +1,34 @@
-// import BaseComponent from './BaseComponent';
-
-type videoEvent = 'abort' | 'canplay' | 'canplaythrough' | 'durationchange' | 'emptied' | 'ended' |
-'error' | 'loadddata' | 'loadedmetadata' | 'loadstart' | 'pause' | 'play' | 'playing' | 'progress' |
-'ratechange' | 'seeked' | 'seeking' | 'stalled' | 'suspend' | 'timeupdate' | 'volumnchange' | 'waiting';
+import { VideoEvent } from '../interfaces/Event';
 
 export default class EventStack{
-  private $target: HTMLElement;
-
-  private events: Array<{
-    name: videoEvent;
-    link: string;
-}>;
-
-  private element: HTMLElement | null;
-
-  constructor($target: HTMLElement) {
-    this.element = null;
-    this.events = [];
-
-    this.$target = $target;
-
-    this.render();
+  private components: {
+    eventStackSection: HTMLElement;
+    eventStackTitle: HTMLHeadingElement;
+    eventStack: HTMLDivElement;
   }
 
-  // public appendEvent(name: videoEvent, link: string) {
-    
-  // }
+  private state: {
+    events: VideoEvent[];
+  }
 
-  public render(): void {
-    const eventStackSection = document.createElement('section');
-    eventStackSection.classList.add('event-stack-section', 'column');
+  constructor(props: { events: VideoEvent[] }) {
+    this.state = {
+      events: props.events,
+    };
 
-      const title = document.createElement('h2');
-      title.innerText = 'event stack';
+    this.components = {
+      eventStackSection: document.createElement('section'),
+      eventStackTitle: document.createElement('h2'),
+      eventStack: document.createElement('div'),
+    };
+  }
 
-      const eventStack = document.createElement('div');
-      eventStack.classList.add('event-stack');
+  public render($target: HTMLElement): void {
+    this.components.eventStackSection.classList.add('event-stack-section', 'column');
+
+      this.components.eventStackTitle.innerText = 'event stack';
+
+      this.components.eventStack.classList.add('event-stack');
 
       // for (const event of this.events) {
       //   const eventEl = document.createElement('a');
@@ -45,9 +38,8 @@ export default class EventStack{
 
       // }
       
-    eventStackSection.append(title, eventStack);
+    this.components.eventStackSection.append(this.components.eventStackTitle, this.components.eventStack);
 
-    this.element = eventStackSection;
-    this.$target.appendChild(eventStackSection);
+    $target.appendChild(this.components.eventStackSection);
   }
 }

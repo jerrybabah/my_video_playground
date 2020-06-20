@@ -1,9 +1,23 @@
-// import BaseComponent from '../../BaseComponent';
 import PlaySlider from './PlaySlider';
-import VolumeSlider from './VolumeSlider';
+import Start from './Start';
+import Volume from './Volume';
+import Time from './Time';
+import PlaybackRate from './PlaybackRate';
+import FullScreen from './FullScreen';
 
 export default class VideoControls{
-  private $target: HTMLElement;
+  private components: {
+    videoControlWrapper: HTMLDivElement,
+    playSlider: PlaySlider,
+    videoControls: HTMLDivElement,
+    leftSide: HTMLDivElement,
+    start: Start,
+    volume: Volume,
+    time: Time,
+    rightSide: HTMLDivElement,
+    playbackRate: PlaybackRate,
+    fullScreen: FullScreen,
+  }
 
   private state: {
     play: boolean;
@@ -11,77 +25,62 @@ export default class VideoControls{
     volume: number;
   };
 
-  constructor($target: HTMLElement, props: {play: boolean, mute: boolean, volume: number}) {
+  constructor(props: {play: boolean, mute: boolean, volume: number}) {
+    // init state
     this.state = {
       play: props.play,
       mute: props.mute,
       volume: props.volume,
     };
 
-    this.$target = $target;
-
-    this.render();
+    // init view component
+    this.components = {
+      videoControlWrapper: document.createElement('div'),
+      playSlider: new PlaySlider(),
+      videoControls: document.createElement('div'),
+      leftSide: document.createElement('div'),
+      start: new Start(),
+      volume: new Volume(),
+      time: new Time(),
+      rightSide: document.createElement('div'),
+      playbackRate: new PlaybackRate(),
+      fullScreen: new FullScreen(),
+    };
   }
 
-  public render(): void {
+  public render($target: HTMLElement): void {
     // <div.video-control-wrapper>
-    const videoControlWrapper = document.createElement('div');
-    videoControlWrapper.classList.add('video-control-wrapper');
+    this.components.videoControlWrapper.classList.add('video-control-wrapper');
 
       // <div.play-slider>
-      new PlaySlider(videoControlWrapper);
+      this.components.playSlider.render(this.components.videoControlWrapper);
 
       // <div.video-controls>
-      const videoControls = document.createElement('div');
-      videoControls.classList.add('video-controls');
+      this.components.videoControls.classList.add('video-controls');
 
         // <div.left-side>
-        const leftSide = document.createElement('div');
-        leftSide.classList.add('left-side');
+        this.components.leftSide.classList.add('left-side');
 
           // <div.start>
-          const start = document.createElement('input');
-          start.type = 'button';
-          start.value = this.state.play? '정지': '시작';
-          start.classList.add('start');
+          this.components.start.render(this.components.leftSide);
 
           // <div.volume>
-          const volume = document.createElement('div');
-          volume.classList.add('volume');
-
-            // <div.mute>
-            const mute = document.createElement('input');
-            mute.type = 'button';
-            mute.value = this.state.mute? 'unmute': 'mute';
-            mute.classList.add('mute');
-
-            volume.append(mute);
-
-            // <div.volume-slider>
-            new VolumeSlider(volume);
-
-          leftSide.append(start, volume);
+          this.components.volume.render(this.components.leftSide);
         
         // <div.right-side>
-        const rightSide = document.createElement('div');
-        rightSide.classList.add('right-side');
+        this.components.rightSide.classList.add('right-side');
 
           // <div.playback-rate>
-          const playbackRate = document.createElement('div');
-          playbackRate.classList.add('playback-rate');
+          this.components.playbackRate.render(this.components.rightSide);
 
           // <div.full-screen>
-          const fullScreen = document.createElement('div');
-          fullScreen.classList.add('full-screen');
-
-          rightSide.append(playbackRate, fullScreen);
-
+          this.components.fullScreen.render(this.components.rightSide);
         
-        videoControls.append(leftSide, rightSide);
+        this.components.videoControls.append(this.components.leftSide, this.components.rightSide);
 
-      videoControlWrapper.append(videoControls);
+      this.components.videoControlWrapper.append(this.components.videoControls);
 
-    this.$target.appendChild(videoControlWrapper);
+    $target.appendChild(this.components.videoControlWrapper);
   }
 }
 
