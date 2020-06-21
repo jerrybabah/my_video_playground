@@ -23,6 +23,17 @@ export default class Autoplay {
     };
   }
 
+  public setState(state: { autoplay?: boolean }): void {
+    this.setAutoplayState(state.autoplay);
+  }
+
+  private setAutoplayState(autoplay?: boolean) {
+    if (autoplay !== undefined) {
+      this.state.autoplay = autoplay;
+      this.components.autoplayInput.checked = this.state.autoplay;
+    }
+  }
+
   public render($target: HTMLElement): void {
     // <div.video-autoplay>
     this.components.autoplay.classList.add('video-autoplay');
@@ -32,6 +43,7 @@ export default class Autoplay {
       this.components.autoplayLabel.innerText = '자동재생';
 
       // <input>
+      this.components.autoplayInput.classList.add('video-control-checkbox');
       this.components.autoplayInput.type = 'checkbox';
       this.components.autoplayInput.name = 'autoplay';
       this.components.autoplayInput.checked = this.state.autoplay;

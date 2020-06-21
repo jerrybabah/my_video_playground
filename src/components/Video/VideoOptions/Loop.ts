@@ -23,6 +23,17 @@ export default class Loop {
     };
   }
 
+  public setState(state: { loop?: boolean }): void {
+    this.setLoopState(state.loop);
+  }
+
+  private setLoopState(loop?: boolean) {
+    if (loop !== undefined) {
+      this.state.loop = loop;
+      this.components.loopInput.checked = this.state.loop;
+    }
+  }
+
   public render($target: HTMLElement): void {
     // <div.video-loop
     this.components.loop.classList.add('video-loop');
@@ -32,6 +43,7 @@ export default class Loop {
       this.components.loopLabel.innerText = '무한반복';
 
       // <input>
+      this.components.loopInput.classList.add('video-control-checkbox');
       this.components.loopInput.type = 'checkbox';
       this.components.loopInput.name = 'loop';
       this.components.loopInput.checked = this.state.loop;

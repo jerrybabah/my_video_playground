@@ -23,6 +23,17 @@ export default class Source {
     };
   }
 
+  public setState(state: { videoUrl?: string }): void {
+    this.setVideoUrlState(state.videoUrl);
+  }
+
+  private setVideoUrlState(videoUrl?: string) {
+    if (videoUrl !== undefined && videoUrl !== this.state.videoUrl) {
+      this.state.videoUrl = videoUrl;
+      this.components.videoSourceInput.value = this.state.videoUrl;
+    }
+  }
+
   public render($target: HTMLElement): void {
     // <div.video-source>
     this.components.videoSource.classList.add('video-source');

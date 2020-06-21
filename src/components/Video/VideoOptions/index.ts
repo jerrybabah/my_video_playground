@@ -31,6 +31,34 @@ export default class VideoOptions{
     };
   }
 
+  public setState(state: { videoUrl?: string; autoplay?: boolean; loop?: boolean }): void {
+    this.setVideoUrlState(state.videoUrl);
+    this.setAutoplayState(state.autoplay);
+    this.setLoopState(state.loop);
+
+    this.components.source.setState(state);
+    this.components.autopaly.setState(state);
+    this.components.loop.setState(state);
+  }
+
+  private setVideoUrlState(videoUrl?: string) {
+    if (videoUrl !== undefined && videoUrl !== this.state.videoUrl ) {
+      this.state.videoUrl = videoUrl;
+    }
+  }
+
+  private setAutoplayState(autoplay?: boolean) {
+    if (autoplay !== undefined) {
+      this.state.autoplay = autoplay;
+    }
+  }
+
+  private setLoopState(loop?: boolean) {
+    if (loop !== undefined) {
+      this.state.loop = loop;
+    }
+  }
+
   public render($target: HTMLElement): void {
     // <div.video-options>
     this.components.videoOptions.classList.add('video-options');

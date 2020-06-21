@@ -51,23 +51,21 @@ export default class Video{
                            currentTime?: string, totalTime?: string, playbackRate?: number,
                            videoUrl?: string, autoplay?: boolean, loop?: boolean }): void {
 
-    if (state.videoUrl !== undefined && state.videoUrl !== this.state.videoUrl) {
-      this.state.videoUrl = state.videoUrl;
-      this.components.video.src = this.state.videoUrl;
-    }
+    this.setPlayState(state.play);
+    this.setMuteState(state.mute);
+    this.setVideoUrlState(state.videoUrl);
+    this.setAutoplayState(state.autoplay);
+    this.setLoopState(state.loop);
 
-    if (state.autoplay !== undefined) {
-      this.state.autoplay = state.autoplay;
-      this.components.video.autoplay = this.state.autoplay;
-    }
+    // TODO: ...더 구현
 
-    if (state.loop !== undefined) {
-      this.state.loop = state.loop;
-      this.components.video.loop = this.state.loop;
-    }
+    this.components.videoControls.setState(state);
+    this.components.videoOptions.setState(state);
+  }
 
-    if (state.play !== undefined) {
-      this.state.play = state.play;
+  private setPlayState(play?: boolean) {
+    if (play !== undefined) {
+      this.state.play = play;
 
       if (this.state.play) {
         this.components.video.play(); // 비동기임 
@@ -75,15 +73,34 @@ export default class Video{
         this.components.video.pause();
       }
     }
+  }
 
-    if (state.mute !== undefined) {
-      this.state.mute = state.mute;
+  private setMuteState(mute?: boolean) {
+    if (mute !== undefined) {
+      this.state.mute = mute;
       this.components.video.muted = this.state.mute;
     }
+  }
 
-    // TODO: ...더 구현
+  private setVideoUrlState(videoUrl?: string) {
+    if (videoUrl !== undefined && videoUrl !== this.state.videoUrl) {
+      this.state.videoUrl = videoUrl;
+      this.components.video.src = this.state.videoUrl;
+    }
+  }
 
-    this.components.videoControls.setState(state);
+  private setAutoplayState(autoplay?: boolean) {
+    if (autoplay !== undefined) {
+      this.state.autoplay = autoplay;
+      this.components.video.autoplay = this.state.autoplay;
+    }
+  }
+
+  private setLoopState(loop?: boolean) {
+    if (loop !== undefined) {
+      this.state.loop = loop;
+      this.components.video.loop = this.state.loop;
+    }
   }
 
   public render($target: HTMLElement): void {
@@ -98,39 +115,17 @@ export default class Video{
       }
 
       if (target.name === 'play') {
-
-        if (target.alt === '시작') {
-          this.setState({ play: true });
-
-        } else {
-          this.setState({ play: false });
-        }
+        this.setState({ play: (target.alt === '시작') });
 
       } else if (target.name === 'mute') {
-
-        if (target.alt === '음소거') {
-          this.setState({ mute: false });
-
-        } else {
-          this.setState({ mute: true });
-        }
+        this.setState({ mute: !(target.alt === '음소거') });
 
       } else if (target.name === 'full') {
-        console.log('click full screen');
+        this.components.video.requestFullscreen(); // 비동기
         
       } else {
         return;
       }
-    };
-
-    this.components.videoSection.onchange = (event: Event) => {
-      // const target = event.target as HTMLInput
-
-      console.log('change', event.target, event.currentTarget);
-    };
-
-    this.components.videoSection.oninput = (event: Event) => {
-      console.log('input', event.target, event.currentTarget);
     };
 
     this.components.videoSection.onkeyup = (event: KeyboardEvent) => {
@@ -145,6 +140,26 @@ export default class Video{
       }
 
       this.setState({ videoUrl: target.value });
+    };
+
+    this.components.videoSection.onchange = (event: Event) => {
+      const target = event.target as HTMLInputElement | null;
+
+      if (!target || !target.classList.contains('video-control-checkbox')) {
+        return;
+      }
+
+      if (target.name === 'autoplay') {
+        this.setState({ autoplay: target.checked });
+
+      } else if (target.name === 'loop') {
+        this.setState({ loop: target.checked });
+
+      } else {
+        return;
+      }
+
+      console.log('change', event.target, event.currentTarget);
     };
 
       // <div.video-wrapper>
