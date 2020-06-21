@@ -1,5 +1,6 @@
 import VideoOptions from './VideoOptions';
 import VideoControls from './VideoControls';
+import { VideoEventName } from '../../interfaces/Event';
 
 export default class Video{
   private components: {
@@ -168,6 +169,23 @@ export default class Video{
         // <video>
         this.components.video.poster = '/image/poster.jpg';
         this.components.video.src = this.state.videoUrl;
+
+        const videoEventStrs: VideoEventName[] = ['abort', 'canplay', 'canplaythrough', 'durationchange', 'emptied', 'ended', 
+                             'error', 'loadddata', 'loadedmetadata', 'loadstart', 'pause', 'play', 'playing', 'progress',
+                             'ratechange', 'seeked', 'seeking', 'stalled', 'suspend', 'timeupdate', 'volumnchange', 'waiting'];
+
+        videoEventStrs.forEach((videoEventStr) => {
+          this.components.video.addEventListener(videoEventStr, (event: Event) => {
+            const videoEvent = new CustomEvent('videoEvent', {
+              bubbles: true,
+              detail: {
+                name: videoEventStr,
+              },
+            });
+
+            event.target?.dispatchEvent(videoEvent);
+          });
+        });
 
         this.components.videoWrapper.append(this.components.video);
 

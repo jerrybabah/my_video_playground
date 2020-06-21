@@ -176,6 +176,9 @@ h1 {
 .event-stack {
   flex-grow: 1;
   width: 100%;
+  /* 500px이 적용되는 것은 아님. overflow: scroll을 위해 아무 숫자나 입력 TODO: 좀 더 의미 있는 설정 방법은 없을까? */
+  height: 500px;
+  overflow: scroll;
   min-height: 200px;
   border: 1px solid black;
 }

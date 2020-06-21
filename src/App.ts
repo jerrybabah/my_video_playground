@@ -31,6 +31,11 @@ export default class App{
     };
   }
 
+  public addVideoEvent(videoEvent: VideoEvent): void {
+    this.state.events.push(videoEvent);
+    this.components.eventStack.addVideoEvent(videoEvent);
+  }
+
   public setState(): void {
     return;
   }
@@ -44,6 +49,11 @@ export default class App{
 
       // <main>
       this.components.main.classList.add('video-playground');
+
+      // TODO: event의 타입을 어떻게 잡으면 될까?
+      this.components.main.addEventListener('videoEvent', (event: any) => {
+        this.addVideoEvent({ name: event.detail.name });
+      });
 
         // <div.video-section>
         this.components.video.render(this.components.main);
@@ -60,6 +70,6 @@ export default class App{
  * <div.container>
  *  <h1>
  *  <main>
- *    <div.video-section>
- *    <div.event-stack-section>
+ *    <video-section>
+ *    <event-stack-section>
  */

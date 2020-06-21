@@ -23,12 +23,28 @@ export default class EventStack{
     };
   }
 
+  public addVideoEvent(videoEvent: VideoEvent): void {
+    this.state.events.push(videoEvent);
+
+    const videoEventEle = document.createElement('div');
+    videoEventEle.innerText = videoEvent.name;
+
+    this.components.eventStack.prepend(videoEventEle);
+  }
+
   public render($target: HTMLElement): void {
     this.components.eventStackSection.classList.add('event-stack-section', 'column');
 
       this.components.eventStackTitle.innerText = 'event stack';
 
       this.components.eventStack.classList.add('event-stack');
+
+        this.state.events.forEach((videoEvent) => {
+          const videoEventEle = document.createElement('div');
+          videoEventEle.innerText = videoEvent.name;
+
+          this.components.eventStack.prepend(videoEventEle);
+        });
       
     this.components.eventStackSection.append(this.components.eventStackTitle, this.components.eventStack);
 
