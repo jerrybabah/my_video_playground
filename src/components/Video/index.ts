@@ -136,7 +136,7 @@ export default class Video{
     };
 
     this.components.videoSection.onkeyup = (event: KeyboardEvent) => {
-      if (event.code !== 'Enter') {
+      if (event.keyCode !== 13) {
         return;
       }
 
