@@ -25,6 +25,18 @@ export default class Time {
     };
   }
 
+  public setState(state: { currentTime?: string; totalTime?: string }): void {
+    if (state.currentTime !== undefined) {
+      this.state.currentTime = state.currentTime;
+      this.components.currentTime.innerText = this.state.currentTime;
+    }
+
+    if (state.totalTime !== undefined) {
+      this.state.totalTime = state.totalTime;
+      this.components.totalTime.innerText = this.state.totalTime;
+    }
+  }
+
   public render($target: HTMLElement): void {
     // <div.time>
     this.components.time.classList.add('time');

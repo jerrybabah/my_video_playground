@@ -29,8 +29,8 @@ export default class Video{
       play: false,
       mute: false,
       volume: 0,
-      currentTime: '00:00',
-      totalTime: '00:00',
+      currentTime: '0:00',
+      totalTime: '0:00',
       playbackRate: 1.0,
       videoUrl: '',
       // TODO: localStorage에 저장된 것 확인 후 정하기
@@ -80,6 +80,12 @@ export default class Video{
     if (mute !== undefined) {
       this.state.mute = mute;
       this.components.video.muted = this.state.mute;
+    }
+  }
+
+  private setTotalTimeState(totalTime?: string) {
+    if (totalTime !== undefined) {
+      this.state.totalTime = totalTime;
     }
   }
 
@@ -185,6 +191,32 @@ export default class Video{
 
             event.target?.dispatchEvent(videoEvent);
           });
+        });
+
+        this.components.video.addEventListener('durationchange', (event: Event) => {
+          const video = event.target as HTMLVideoElement | null;
+
+          if (!video || video !== this.components.video) {
+            return;
+          }
+
+          const miniute = Math.floor(video.duration / 60);
+          const second = Math.round(video.duration % 60);
+
+          this.setState({ totalTime: `${miniute.toFixed(0)}:${second.toFixed(0).padStart(2, '0')}` });
+        });
+
+        this.components.video.addEventListener('timeupdate', (event: Event) => {
+          const video = event.target as HTMLVideoElement | null;
+
+          if (!video || video !== this.components.video) {
+            return;
+          }
+
+          const miniute = Math.floor(video.currentTime / 60);
+          const second = Math.round(video.currentTime % 60);
+
+          this.setState( { currentTime: `${miniute.toFixed(0)}:${second.toFixed(0).padStart(2, '0')}` });
         });
 
         this.components.videoWrapper.append(this.components.video);

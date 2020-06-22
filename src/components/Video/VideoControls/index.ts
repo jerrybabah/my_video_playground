@@ -28,7 +28,7 @@ export default class VideoControls{
     playbackRate: number;
   };
 
-  public setState(state: { play?: boolean, mute?: boolean, volumn?: number, 
+  public setState(state: { play?: boolean, mute?: boolean, volume?: number, 
                            currentTime?: string, totalTime?: string, playbackRate?: number }): void {
     if (state.play !== undefined) {
       this.state.play = state.play;
@@ -38,6 +38,21 @@ export default class VideoControls{
     if (state.mute !== undefined) {
       this.state.mute = state.mute;
       this.components.volume.setState( { mute: state.mute });
+    }
+
+    if (state.volume !== undefined) {
+      this.state.volume = state.volume;
+      this.components.volume.setState({ volume: state.volume });
+    }
+
+    if (state.currentTime !== undefined) {
+      this.state.currentTime = state.currentTime;
+      this.components.time.setState({ currentTime: state.currentTime });
+    }
+
+    if (state.totalTime !== undefined) {
+      this.state.totalTime = state.totalTime;
+      this.components.time.setState({ totalTime: state.totalTime });
     }
   }
 
