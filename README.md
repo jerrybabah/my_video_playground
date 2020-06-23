@@ -1,6 +1,6 @@
 # My Video Playground
 
-[구경하기](https://baba-video-playground.web.app)
+[구경하기](https://baba-video-playground.web.app)  
 [프로젝트 관리 현황](https://trello.com/b/8k4zuHzx/baba-video-playground)
 
 ## 기술 스택
