@@ -57,7 +57,7 @@ export default class Source {
       };
 
       this.components.videoSourceInput.onkeyup = (event: KeyboardEvent) => {
-        if (event.keyCode !== 13) {
+        if (event.key !== 'Enter') {
           event.stopPropagation();
         }
       };
