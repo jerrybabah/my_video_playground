@@ -33,9 +33,8 @@ export default class Video{
       totalTime: '0:00',
       playbackRate: 1.0,
       videoUrl: '',
-      // TODO: localStorage에 저장된 것 확인 후 정하기
-      autoplay: false,
-      loop: false,
+      autoplay: localStorage.getItem('autoplay') === 'true',
+      loop: localStorage.getItem('loop') === 'true',
     };
 
     // init view component
@@ -109,6 +108,7 @@ export default class Video{
     if (autoplay !== undefined) {
       this.state.autoplay = autoplay;
       this.components.video.autoplay = this.state.autoplay;
+      localStorage.setItem('autoplay', String(this.state.autoplay));
     }
   }
 
@@ -116,6 +116,7 @@ export default class Video{
     if (loop !== undefined) {
       this.state.loop = loop;
       this.components.video.loop = this.state.loop;
+      localStorage.setItem('loop', String(this.state.loop));
     }
   }
 
@@ -187,8 +188,6 @@ export default class Video{
       } else {
         return;
       }
-
-      console.log('change', event.target, event.currentTarget);
     };
 
       // <div.video-wrapper>
@@ -197,6 +196,8 @@ export default class Video{
         // <video>
         this.components.video.poster = '/image/poster.jpg';
         this.components.video.src = this.state.videoUrl;
+        this.components.video.autoplay = this.state.autoplay;
+        this.components.video.loop = this.state.loop;
 
         const videoEventStrs: VideoEventName[] = ['abort', 'canplay', 'canplaythrough', 'durationchange', 'emptied', 'ended', 
                              'error', 'loadddata', 'loadedmetadata', 'loadstart', 'pause', 'play', 'playing', 'progress',
