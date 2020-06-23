@@ -119,7 +119,7 @@ h1 {
   height: 30px;
 }
 
-.start img, .mute img, .full-screen img, .playback-rate {
+.start img, .mute img, .full-screen img, .current-playback-rate, .playback-rate-value {
   cursor: pointer;
 }
 

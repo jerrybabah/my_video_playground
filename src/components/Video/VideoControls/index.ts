@@ -54,6 +54,11 @@ export default class VideoControls{
       this.state.totalTime = state.totalTime;
       this.components.time.setState({ totalTime: state.totalTime });
     }
+
+    if (state.playbackRate !== undefined) {
+      this.state.playbackRate = state.playbackRate;
+      this.components.playbackRate.setState({ playbackRate: state.playbackRate });
+    }
   }
 
   constructor(props: { play: boolean; mute: boolean; volume: number; currentTime: string; totalTime: string, playbackRate: number }) {

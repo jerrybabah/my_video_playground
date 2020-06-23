@@ -54,6 +54,8 @@ export default class Video{
 
     this.setPlayState(state.play);
     this.setMuteState(state.mute);
+    this.setTotalTimeState(state.totalTime);
+    this.setPlaybackRateState(state.playbackRate);
     this.setVideoUrlState(state.videoUrl);
     this.setAutoplayState(state.autoplay);
     this.setLoopState(state.loop);
@@ -89,6 +91,13 @@ export default class Video{
     }
   }
 
+  private setPlaybackRateState(playbackRate?: number) {
+    if (playbackRate !== undefined) {
+      this.state.playbackRate = playbackRate;
+      this.components.video.playbackRate = this.state.playbackRate;
+    }
+  }
+
   private setVideoUrlState(videoUrl?: string) {
     if (videoUrl !== undefined && videoUrl !== this.state.videoUrl) {
       this.state.videoUrl = videoUrl;
@@ -115,21 +124,34 @@ export default class Video{
     this.components.videoSection.classList.add('video-section', 'column');
 
     this.components.videoSection.onclick = (event: MouseEvent) => {
-      const target = event.target as HTMLImageElement | null;
+      let target: HTMLLIElement | HTMLImageElement;
 
-      if (!target || !target.classList.contains('video-control-btn')) {
+      if (!event.target) {
         return;
       }
 
-      if (target.name === 'play') {
-        this.setState({ play: (target.alt === '시작') });
+      if ((event.target as HTMLElement).classList.contains('video-control-btn')) {
+        target = event.target as HTMLImageElement;
 
-      } else if (target.name === 'mute') {
-        this.setState({ mute: !(target.alt === '음소거') });
+        if (target.name === 'play') {
+          this.setState({ play: (target.alt === '시작') });
+  
+        } else if (target.name === 'mute') {
+          this.setState({ mute: !(target.alt === '음소거') });
+  
+        } else if (target.name === 'full') {
+          this.components.video.requestFullscreen(); // 비동기
+          
+        } else {
+          return;
+        }
 
-      } else if (target.name === 'full') {
-        this.components.video.requestFullscreen(); // 비동기
-        
+
+      } else if ((event.target as HTMLElement).classList.contains('playback-rate-value')) {
+        target = event.target as HTMLLIElement;
+
+        this.setState({ playbackRate: Number(target.innerText) });
+
       } else {
         return;
       }

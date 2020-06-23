@@ -27,10 +27,18 @@ export default class PlaybackRate {
         const playbackRateValue = document.createElement('li');
         playbackRateValue.classList.add('playback-rate-value');
         playbackRateValue.innerText = playback.toFixed(1);
+        playbackRateValue.value = playback;
 
         return playbackRateValue;
       }),
     };
+  }
+
+  public setState(state: { playbackRate?: number }): void {
+    if (state.playbackRate !== undefined) {
+      this.state.playbackRate = state.playbackRate;
+      this.components.currentPlaybackRate.innerText = this.state.playbackRate.toFixed(1);
+    }
   }
 
   public render($target: HTMLElement): void {
@@ -40,6 +48,14 @@ export default class PlaybackRate {
       // <div.current-playback-rate>
       this.components.currentPlaybackRate.classList.add('current-playback-rate');
       this.components.currentPlaybackRate.innerText = this.state.playbackRate.toFixed(1);
+
+      this.components.currentPlaybackRate.onclick = (event: MouseEvent) => {
+        if (this.components.playbackRateList.classList.contains('hide')) {
+          this.components.playbackRateList.classList.remove('hide');
+        } else {
+          this.components.playbackRateList.classList.add('hide');
+        }
+      };
 
       // <ul.playback-rate-list>
       this.components.playbackRateList.classList.add('playback-rate-list', 'hide');
